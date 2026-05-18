@@ -2,9 +2,10 @@
 import os
 import platform
 import sys
-from PySide6.QtWidgets import (QMainWindow, QToolBar, QStatusBar, QWidget, QSplitter, 
-                             QVBoxLayout, QMessageBox, QPushButton, QProgressBar,
-                             QLabel, QHBoxLayout, QApplication)
+from PySide6.QtWidgets import (QMainWindow, QToolBar, QToolButton, QStatusBar,
+                             QWidget, QSplitter, QVBoxLayout, QMessageBox,
+                             QPushButton, QProgressBar, QLabel, QHBoxLayout,
+                             QApplication)
 from PySide6.QtGui import QAction, QIcon, QDesktopServices, QPixmap, QPainter, QColor, QPen, QFont
 from PySide6.QtCore import Qt, QUrl, Signal, QTimer, QEvent, QObject, QSize
 
@@ -77,6 +78,11 @@ class MainWindow(QMainWindow):
         app_icon_path = get_resource_path("resources/Logo/App_Logo.ico")
         if os.path.exists(app_icon_path):
             self.setWindowIcon(QIcon(app_icon_path))
+
+        # Preference: show button text under icons on toolbars. Default True
+        # to match the v2 viewer's ribbon. Toggleable from
+        # File → Preferences → Toolbar → Show Text Labels.
+        self._toolbar_text_enabled: bool = True
 
         # --- Menu bar and toolbar ---
         self._create_menu()
@@ -479,14 +485,15 @@ class MainWindow(QMainWindow):
         # Define actions with icons
         new_project_ico = os.path.join(resources_icon_path, "new_project.ico")
         new_icon = QIcon(new_project_ico) if os.path.exists(new_project_ico) else get_icon("document-new", "new.png")
-        self.action_new = QAction(new_icon, "New Project", self)
+        self.action_new = QAction(new_icon, "NewProj", self)
         open_project_ico = os.path.join(resources_icon_path, "open_project.ico")
         open_icon = QIcon(open_project_ico) if os.path.exists(open_project_ico) else get_icon("folder", "open.png")
-        self.action_open = QAction(open_icon, "Open Project", self)
-        self.action_save = QAction(get_icon("document-save", "save.png"), "Save Project", self)
+        self.action_open = QAction(open_icon, "OpenProj", self)
+        self.action_save = QAction(get_icon("document-save", "save.png"), "SaveProj", self)
         import_k_ico = os.path.join(resources_icon_path, "import_k_file.ico")
         import_k_icon = QIcon(import_k_ico) if os.path.exists(import_k_ico) else get_icon("document-open", "import.png")
-        self.action_import = QAction(import_k_icon, "Import .k File", self)
+        self.action_import = QAction(import_k_icon, "ImpDeck", self)
+        self.action_import.setToolTip("Import a .k file into the current project")
         gen_k_ico = os.path.join(resources_icon_path, "generate_k_files.ico")
         if os.path.exists(gen_k_ico):
             gen_k_pm = QPixmap(gen_k_ico).scaled(
@@ -496,7 +503,8 @@ class MainWindow(QMainWindow):
             gen_k_icon = QIcon(gen_k_pm)
         else:
             gen_k_icon = get_icon("document-send", "export.png")
-        self.action_export = QAction(gen_k_icon, "Generate .k File", self)
+        self.action_export = QAction(gen_k_icon, "GenDecks", self)
+        self.action_export.setToolTip("Generate all .k files for the current project")
         
         # Single .k file export action
         single_k_ico = os.path.join(resources_icon_path, "generate_single_k_file.ico")
@@ -505,9 +513,10 @@ class MainWindow(QMainWindow):
                 32, 32, Qt.AspectRatioMode.KeepAspectRatio,
                 Qt.TransformationMode.SmoothTransformation,
             )
-            self.action_export_single = QAction(QIcon(single_k_pm), "Generate Single .k File", self)
+            self.action_export_single = QAction(QIcon(single_k_pm), "GenDeck", self)
         else:
-            self.action_export_single = QAction(get_icon("document-export", "export.png"), "Generate Single .k File", self)
+            self.action_export_single = QAction(get_icon("document-export", "export.png"), "GenDeck", self)
+        self.action_export_single.setToolTip("Generate a single .k file for the current project")
         
         # Exit action - use Exit_App.ico if available
         exit_icon_path = os.path.join(resources_icon_path, "exit.ico")
@@ -521,14 +530,14 @@ class MainWindow(QMainWindow):
         import_kproj_icon = os.path.join(resources_icon_path, "import_project.ico")
         
         if os.path.exists(export_kproj_icon):
-            self.action_export_library = QAction(QIcon(export_kproj_icon), "Export Project...", self)
+            self.action_export_library = QAction(QIcon(export_kproj_icon), "ExpProj", self)
         else:
-            self.action_export_library = QAction(get_icon("document-save-as", "export.png"), "Export Project...", self)
+            self.action_export_library = QAction(get_icon("document-save-as", "export.png"), "ExpProj", self)
         
         if os.path.exists(import_kproj_icon):
-            self.action_import_library = QAction(QIcon(import_kproj_icon), "Import Project...", self)
+            self.action_import_library = QAction(QIcon(import_kproj_icon), "ImpProj", self)
         else:
-            self.action_import_library = QAction(get_icon("document-open", "import.png"), "Import Project...", self)
+            self.action_import_library = QAction(get_icon("document-open", "import.png"), "ImpProj", self)
         
         self.action_export_library.setToolTip(
             "Export Project (Encrypted)\n"
@@ -593,10 +602,22 @@ class MainWindow(QMainWindow):
         # Store language actions and set current language check
         self.language_actions = [self.action_lang_english, self.action_lang_spanish]
         self._update_language_checkmarks()
-        
+
         # Register for language change notifications
         get_translator().register_observer(self._on_language_changed)
-        
+
+        # Toolbar submenu inside Preferences
+        self.toolbar_menu = self.preferences_menu.addMenu("Toolbar")
+        self.action_toolbar_show_text = QAction("Show Text Labels", self)
+        self.action_toolbar_show_text.setCheckable(True)
+        self.action_toolbar_show_text.setChecked(self._toolbar_text_enabled)
+        self.action_toolbar_show_text.setToolTip(
+            "Show the action label under each icon in the main and plugin\n"
+            "toolbars. Uncheck to revert to icons-only."
+        )
+        self.action_toolbar_show_text.toggled.connect(self._on_toolbar_text_toggled)
+        self.toolbar_menu.addAction(self.action_toolbar_show_text)
+
         file_menu.addSeparator()
         
         # Logout action - clears persistent session
@@ -625,7 +646,7 @@ class MainWindow(QMainWindow):
         # Material Library action (at top)
         self.action_material_library = QAction(
             get_icon("database", "database_icon-icons.com_70204.ico"), 
-            "Material Library...", 
+            "MatLib", 
             self
         )
         self.action_material_library.setToolTip("Open Material Library browser")
@@ -636,19 +657,19 @@ class MainWindow(QMainWindow):
         # Export actions
         _exp_full_ico = os.path.join(resources_icon_path, "export_backup_db.ico")
         _exp_full_icon = QIcon(_exp_full_ico) if os.path.exists(_exp_full_ico) else QIcon()
-        self.action_db_export_full = QAction(_exp_full_icon, "Export Full Backup...", self)
+        self.action_db_export_full = QAction(_exp_full_icon, "ExpDB", self)
         self.action_db_export_full.setToolTip("Export all projects and materials to encrypted backup")
         database_menu.addAction(self.action_db_export_full)
         
         _exp_proj_ico = os.path.join(resources_icon_path, "export_project_db.ico")
         _exp_proj_icon = QIcon(_exp_proj_ico) if os.path.exists(_exp_proj_ico) else QIcon()
-        self.action_db_export_projects = QAction(_exp_proj_icon, "Export Projects DB...", self)
+        self.action_db_export_projects = QAction(_exp_proj_icon, "ExpProj", self)
         self.action_db_export_projects.setToolTip("Export only projects database")
         database_menu.addAction(self.action_db_export_projects)
         
         _exp_mat_ico = os.path.join(resources_icon_path, "export_material_db.ico")
         _exp_mat_icon = QIcon(_exp_mat_ico) if os.path.exists(_exp_mat_ico) else QIcon()
-        self.action_db_export_materials = QAction(_exp_mat_icon, "Export Materials DB...", self)
+        self.action_db_export_materials = QAction(_exp_mat_icon, "ExpMat", self)
         self.action_db_export_materials.setToolTip("Export only materials database")
         database_menu.addAction(self.action_db_export_materials)
         
@@ -657,7 +678,7 @@ class MainWindow(QMainWindow):
         # Import actions
         _imp_backup_ico = os.path.join(resources_icon_path, "import_backup_db.ico")
         _imp_backup_icon = QIcon(_imp_backup_ico) if os.path.exists(_imp_backup_ico) else get_icon("document-open", "import.png")
-        self.action_db_import = QAction(_imp_backup_icon, "Import Backup...", self)
+        self.action_db_import = QAction(_imp_backup_icon, "ImpDB", self)
         self.action_db_import.setToolTip("Import database from encrypted backup file")
         database_menu.addAction(self.action_db_import)
 
@@ -668,19 +689,17 @@ class MainWindow(QMainWindow):
         self.action_plots.triggered.connect(self._show_plot_dialog)
         tools_menu.addAction(self.action_plots)
         
-        # 3D Model Viewer action (Qt-embedded with toolbars)
-        self.action_3d_viewer = QAction("3D Model Viewer", self)
-        self.action_3d_viewer.setToolTip("Open 3D viewer for the .k file selected in File Viewer")
-        self.action_3d_viewer.triggered.connect(self._show_3d_viewer)
-        tools_menu.addAction(self.action_3d_viewer)
-
-        # 3D Viewer 2.0 — new-generation viewer (ribbon + three-panel layout)
-        self.action_3d_viewer_v2 = QAction("3D Viewer 2.0", self)
-        self.action_3d_viewer_v2.setToolTip(
-            "Open 3D Viewer 2.0 — new industrial-style viewer with ribbon and panels"
-        )
+        # 3D Viewer v2 — new-generation viewer (toolbar + menu)
+        self.action_3d_viewer_v2 = QAction("3DViewer", self)
+        self.action_3d_viewer_v2.setToolTip("Open 3D Viewer v2 — industrial-style viewer with ribbon and panels")
         self.action_3d_viewer_v2.triggered.connect(self._show_3d_viewer_v2)
         tools_menu.addAction(self.action_3d_viewer_v2)
+
+        # 3D Viewer (legacy) — original Qt-embedded viewer
+        self.action_3d_viewer_legacy = QAction("3D Viewer (legacy)", self)
+        self.action_3d_viewer_legacy.setToolTip("Open original 3D viewer (legacy)")
+        self.action_3d_viewer_legacy.triggered.connect(self._show_3d_viewer)
+        tools_menu.addAction(self.action_3d_viewer_legacy)
 
         # 3D Viewer — Native (keyboard-only fallback)
         self.action_3d_native = QAction("3D Viewer (native)", self)
@@ -691,9 +710,9 @@ class MainWindow(QMainWindow):
         # Reset Splitters action
         reset_splitters_icon_path = os.path.join(resources_icon_path, "Viewport_split.ico")
         if os.path.exists(reset_splitters_icon_path):
-            self.action_reset_splitters = QAction(QIcon(reset_splitters_icon_path), "Reset Layout", self)
+            self.action_reset_splitters = QAction(QIcon(reset_splitters_icon_path), "Layout", self)
         else:
-            self.action_reset_splitters = QAction("Reset Layout", self)
+            self.action_reset_splitters = QAction("Layout", self)
         self.action_reset_splitters.setToolTip("Reset splitters to default positions")
         self.action_reset_splitters.triggered.connect(self._reset_splitters)
         tools_menu.addAction(self.action_reset_splitters)
@@ -748,11 +767,52 @@ class MainWindow(QMainWindow):
         self.action_about.triggered.connect(self._show_about_dialog)
         help_menu.addAction(self.action_about)
 
+    # Flat ribbon-style QSS borrowed from the v2 viewer's toolbar so both
+    # toolbars in the app share the same visual language: transparent
+    # buttons, soft hover/pressed feedback, room under the icon for a text
+    # label when "Show Text Labels" is on.
+    _MAIN_TOOLBAR_STYLE = """
+QToolBar {
+    background: #e8e8e8;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+    spacing: 2px;
+    padding: 3px 6px;
+}
+QToolBar QToolButton {
+    background: transparent;
+    border: none;
+    border-radius: 4px;
+    color: #333333;
+    font-size: 9pt;
+    padding: 2px 6px;
+    min-width: 40px;
+    min-height: 54px;
+}
+QToolBar QToolButton:hover {
+    background: #d0d8e8;
+}
+QToolBar QToolButton:pressed,
+QToolBar QToolButton:checked {
+    background: #b8c8e0;
+    border: 1px solid #8898b8;
+}
+QToolBar QToolButton::menu-indicator {
+    subcontrol-position: right center;
+    subcontrol-origin: padding;
+    width: 10px;
+    left: -2px;
+}
+QToolBar QToolButton[popupMode="1"] {
+    padding-right: 14px;
+}
+"""
+
     def _create_toolbar(self):
         toolbar = QToolBar("Main Toolbar", self)
         toolbar.setMovable(True)
         toolbar.setIconSize(QSize(32, 32))
-        toolbar.setStyleSheet(TOOLBAR_STYLE)
+        toolbar.setStyleSheet(self._MAIN_TOOLBAR_STYLE)
 
         # Create plot icon programmatically (must be done after Qt is initialized)
         plot_icon = self._create_plot_icon(24)
@@ -761,7 +821,7 @@ class MainWindow(QMainWindow):
         # 3D viewer icon
         viewer_3d_icon_path = os.path.join(resources_icon_path, "viewer_3D_.ico")
         if os.path.exists(viewer_3d_icon_path):
-            self.action_3d_viewer.setIcon(QIcon(viewer_3d_icon_path))
+            self.action_3d_viewer_v2.setIcon(QIcon(viewer_3d_icon_path))
 
         # DB export/import icons for toolbar
         _export_db_ico = os.path.join(resources_icon_path, "export_db.ico")
@@ -789,16 +849,17 @@ class MainWindow(QMainWindow):
         toolbar.addAction(self.action_db_import)
         toolbar.addSeparator()
         toolbar.addAction(self.action_plots)
-        toolbar.addAction(self.action_3d_viewer)
+        toolbar.addAction(self.action_3d_viewer_v2)
         toolbar.addAction(self.action_reset_splitters)
         toolbar.addSeparator()
         toolbar.addAction(self.action_exit)
 
-        # Show only icons
-        toolbar.setToolButtonStyle(Qt.ToolButtonIconOnly)
+        # Initial style — text under icons by default, mirroring the v2 viewer
+        # ribbon. Toggleable via File → Preferences → Toolbar → Show Text Labels.
+        toolbar.setToolButtonStyle(self._current_toolbar_style())
 
         self.addToolBar(Qt.TopToolBarArea, toolbar)
-        
+
         # Store toolbar reference
         self._main_toolbar = toolbar
 
@@ -806,13 +867,113 @@ class MainWindow(QMainWindow):
         self._plugin_toolbar = QToolBar("Plugins", self)
         self._plugin_toolbar.setMovable(True)
         self._plugin_toolbar.setIconSize(QSize(32, 32))
-        self._plugin_toolbar.setStyleSheet(TOOLBAR_STYLE)
-        self._plugin_toolbar.setToolButtonStyle(Qt.ToolButtonIconOnly)
+        self._plugin_toolbar.setStyleSheet(self._MAIN_TOOLBAR_STYLE)
+        self._plugin_toolbar.setToolButtonStyle(self._current_toolbar_style())
 
         if hasattr(self, '_loaded_plugins') and self._loaded_plugins:
             self._add_plugin_toolbar_buttons(self._plugin_toolbar, self._loaded_plugins)
 
         self.addToolBar(Qt.TopToolBarArea, self._plugin_toolbar)
+
+        # Equal-width pass — deferred to next tick so the toolbars are
+        # fully laid out before we measure sizeHints. Buttons whose text
+        # exceeds the common width still grow individually.
+        QTimer.singleShot(0, self._normalize_all_toolbars)
+
+    def _current_toolbar_style(self):
+        """Return the Qt.ToolButtonStyle that matches the current
+        ``_toolbar_text_enabled`` setting."""
+        return (
+            Qt.ToolButtonStyle.ToolButtonTextUnderIcon
+            if getattr(self, "_toolbar_text_enabled", True)
+            else Qt.ToolButtonStyle.ToolButtonIconOnly
+        )
+
+    def _toolbar_reference_width(self):
+        """Width that every toolbar button should target.
+
+        We anchor on the 'New Project' button — its sizeHint with the
+        current icon-text style is the reference. Buttons whose label
+        already fits inside this width align cleanly with the rest;
+        labels that exceed it get elided or grow individually (Qt's
+        own decision based on text length).
+        """
+        main_tb = getattr(self, "_main_toolbar", None)
+        new_action = getattr(self, "action_new", None)
+        if main_tb is None or new_action is None:
+            return None
+        for btn in main_tb.findChildren(QToolButton):
+            if btn.defaultAction() is new_action:
+                btn.adjustSize()
+                return btn.sizeHint().width()
+        return None
+
+    def _normalize_toolbar_button_widths(self, toolbar) -> None:
+        """Fix every QToolButton in *toolbar* to the 'New Project' width.
+
+        All buttons get the SAME minimum + maximum width so they line up
+        as a tidy grid. Labels that exceed the reference width have been
+        shortened in the action definitions ('Generate Decks', 'Export
+        Backup', etc.) so the elision case stays rare.
+
+        Clearing the previous override before measuring keeps the reference
+        width honest across icon-only ↔ text-under-icon toggles (the
+        sizeHint of the 'New Project' button changes between modes).
+        """
+        if toolbar is None:
+            return
+        buttons = toolbar.findChildren(QToolButton)
+        if not buttons:
+            return
+        # Reset any previous override so the reference sizeHint is honest.
+        for btn in buttons:
+            btn.setMinimumWidth(0)
+            btn.setMaximumWidth(16777215)  # Qt's WIDGETSIZE_MAX
+        for btn in buttons:
+            btn.adjustSize()
+        ref_w = self._toolbar_reference_width()
+        if ref_w is None or ref_w <= 0:
+            return
+        for btn in buttons:
+            btn.setMinimumWidth(ref_w)
+            btn.setMaximumWidth(ref_w)
+
+    def _normalize_all_toolbars(self) -> None:
+        """Apply uniform-width normalisation to both main toolbars.
+
+        Both toolbars share the same reference (the 'New Project' button
+        in the main toolbar), so the main + plugin toolbars end up with
+        identical button widths regardless of their own contents.
+        """
+        for tb in (
+            getattr(self, "_main_toolbar", None),
+            getattr(self, "_plugin_toolbar", None),
+        ):
+            self._normalize_toolbar_button_widths(tb)
+
+    def _on_toolbar_text_toggled(self, checked: bool) -> None:
+        """File → Preferences → Toolbar → Show Text Labels handler.
+
+        Applies the new style to both the main toolbar and the plugin
+        toolbar. Plugin toolbar may not exist yet during very-early init,
+        hence the hasattr guard. After the style flip, re-run width
+        normalisation so the equal-width layout reflects the new mode.
+        """
+        self._toolbar_text_enabled = bool(checked)
+        style = self._current_toolbar_style()
+        for tb in (
+            getattr(self, "_main_toolbar", None),
+            getattr(self, "_plugin_toolbar", None),
+        ):
+            if tb is not None:
+                try:
+                    tb.setToolButtonStyle(style)
+                except Exception:
+                    pass
+        # Defer to next event-loop tick so Qt has finished the style change
+        # before we measure sizeHint — measuring synchronously can yield
+        # the pre-toggle width.
+        QTimer.singleShot(0, self._normalize_all_toolbars)
 
     def setCentralWidgets(self, project_manager, tree_widget, tabs_widget, file_viewer, placeholder_widget):
         """Layout: one horizontal splitter containing two vertical splitters.
@@ -1729,9 +1890,12 @@ please contact us at:</p>
         }
         
         for plugin in plugins:
-            action = QAction(self)
+            # The action's text is what the toolbar renders under the icon
+            # when "Show Text Labels" is on. Use the plugin's display name
+            # (e.g. "Unit Converter") so it reads naturally in the ribbon.
+            action = QAction(plugin.display_name or "", self)
             action.setToolTip(f"{plugin.display_name}\n{plugin.description}")
-            
+
             # Get icon for this plugin - use plugin.name property directly
             plugin_id = plugin.name if hasattr(plugin, 'name') else ''
             if plugin_id in plugin_icons:

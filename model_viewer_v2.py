@@ -724,6 +724,7 @@ class KModelViewerV2Dialog(QDialog):
         self._actors:      list = []
         self._part_actors: dict = {}
         self._part_polydata: dict = {}
+        self._part_topology: dict = {}  # pid -> {"elements": int, "nodes": int} (real deck counts)
         self._entity_actors: dict = {}
         self._highlight_fe_actors: dict = {}
         self._highlighted_pids: set = set()
@@ -738,9 +739,12 @@ class KModelViewerV2Dialog(QDialog):
         self._material_checked_mids: set = set()   # permanent (checkbox)
         self._part_user_visible: dict = {}    # pid -> bool (FEM Parts intent)
         self._pre_dim_opacity: dict = {}      # pid -> float (opacity snapshot before navigator-selection dim)
+        self._pre_dim_color: dict = {}        # pid -> (r,g,b) color snapshot before phantom-color override
         self._phantom_enabled: bool = True    # Config: dim non-selected parts on selection
-        self._phantom_opacity: float = 0.10   # Config: opacity applied to non-selected parts
+        self._phantom_opacity: float = 0.05   # Config: opacity applied to non-selected parts
+        self._phantom_custom_color: tuple | None = None  # (r,g,b) 0..1 override applied to dimmed parts; None = keep each part's own color
         self._icon_text_enabled: bool = True  # Config: show icon + text vs icons-only in ribbons
+        self._zoom_item_enabled: bool = True  # Config: auto-fit camera to selection (keeps orientation)
         self._custom_edge_color: tuple | None = None  # (r,g,b) floats 0..1, None = auto (white on dark / black on light)
         self._custom_bg_color: str | None = None      # hex like "#aabbcc" if user picked a custom background
         self._ribbon_toolbars: list = []      # collected for icon/text style toggles
@@ -1022,7 +1026,7 @@ class KModelViewerV2Dialog(QDialog):
         # ── Zoom Window ───────────────────────────────────────────────────
         _zw_p = os.path.join(_ICONS_DIR, "zoom_window_MV.ico")
         _zw_icon = QIcon(_zw_p) if os.path.exists(_zw_p) else QIcon()
-        self._a_zoom_window = QAction(_zw_icon, "Zoom Window", self)
+        self._a_zoom_window = QAction(_zw_icon, "Zoom Win.", self)
         self._a_zoom_window.setCheckable(True)
         self._a_zoom_window.setToolTip(
             "Click two points in the viewer to zoom into that rectangle"
@@ -1444,6 +1448,31 @@ class KModelViewerV2Dialog(QDialog):
         opacity_row.addStretch(1)
         cfg_lay.addLayout(opacity_row)
 
+        # ── Phantom Color (custom override for dimmed parts) ──────────────
+        phantom_color_row = QHBoxLayout()
+        phantom_color_row.setContentsMargins(20, 0, 0, 0)
+        phantom_color_row.setSpacing(8)
+        phantom_color_row.addWidget(QLabel("Phantom Color:"))
+        self._cfg_phantom_color_swatch = self._make_color_swatch_btn((0.5, 0.5, 0.5))
+        self._cfg_phantom_color_swatch.setToolTip(
+            "Custom color applied to all parts that are dimmed by Phantom mode.\n"
+            "Click the 'Auto' button on the right to clear and let each part keep its own color."
+        )
+        self._cfg_phantom_color_swatch.clicked.connect(self._on_pick_phantom_color)
+        phantom_color_row.addWidget(self._cfg_phantom_color_swatch)
+        self._cfg_md_reset = QPushButton("Auto")
+        self._cfg_md_reset.setFixedWidth(56)
+        self._cfg_md_reset.setToolTip(
+            "Restore Model Display defaults:\n"
+            " • Background Color → White\n"
+            " • Phantom Color → off (each part keeps its own color)\n"
+            " • Edge Color → Auto (theme-based)"
+        )
+        self._cfg_md_reset.clicked.connect(self._on_reset_model_display)
+        phantom_color_row.addWidget(self._cfg_md_reset)
+        phantom_color_row.addStretch(1)
+        cfg_lay.addLayout(phantom_color_row)
+
         cfg_lay.addSpacing(8)
 
         # ── Icon and Text ───────────────────────────────────────────────
@@ -1454,6 +1483,17 @@ class KModelViewerV2Dialog(QDialog):
         self._cfg_icon_text_check.setChecked(self._icon_text_enabled)
         self._cfg_icon_text_check.toggled.connect(self._on_icon_text_toggled)
         cfg_lay.addWidget(self._cfg_icon_text_check)
+
+        # ── Auto-Zoom ───────────────────────────────────────────────────
+        self._cfg_zoom_item_check = QCheckBox("Auto-Zoom")
+        self._cfg_zoom_item_check.setToolTip(
+            "Auto-fit the view to the selected part(s) whenever the\n"
+            "navigator selection changes. Camera orientation is kept;\n"
+            "only the framing changes."
+        )
+        self._cfg_zoom_item_check.setChecked(self._zoom_item_enabled)
+        self._cfg_zoom_item_check.toggled.connect(self._on_zoom_item_toggled)
+        cfg_lay.addWidget(self._cfg_zoom_item_check)
 
         cfg_lay.addSpacing(8)
 
@@ -1721,6 +1761,7 @@ class KModelViewerV2Dialog(QDialog):
         self._material_checked_mids = set()
         self._part_user_visible = {}
         self._pre_dim_opacity = {}
+        self._pre_dim_color = {}
         self._material_fe_actors = {}  # actors are dropped by plotter.clear() above
         self._style_fe_actors = {}     # ditto
         self._wire_overlay_actor = None  # ditto
@@ -1770,6 +1811,9 @@ class KModelViewerV2Dialog(QDialog):
                 if name:
                     self._part_names[pid] = name
         self._keyword_entities = kw_entities or {}
+        # Real deck topology counts (elements/nodes per PID from the *ELEMENT* tables).
+        _topo = self._keyword_entities.get("__topology__") or {}
+        self._part_topology = _topo.get("per_pid") or {}
         # Materials come from the loader under "__materials__"; filter to those
         # actually referenced by at least one *PART and attach the PID set.
         self._consume_materials_payload(self._keyword_entities.get("__materials__"))
@@ -1806,6 +1850,7 @@ class KModelViewerV2Dialog(QDialog):
         pd = self._polydata
         self._part_actors.clear()
         self._part_polydata.clear()
+        self._part_topology.clear()
         self._part_base_color.clear()
         try:
             self.plotter.enable_lightkit()
@@ -2180,6 +2225,7 @@ class KModelViewerV2Dialog(QDialog):
                     lighting=False,
                     pickable=False,
                     render=False,
+                    reset_camera=False,
                     name="_wire_overlay_global",
                 )
                 if as_points:
@@ -2476,15 +2522,21 @@ class KModelViewerV2Dialog(QDialog):
                     manifold_edges=False, non_manifold_edges=True, feature_angle=30,
                 )
                 if edges.n_points > 0:
+                    # reset_camera=False keeps PyVista from auto-fitting on
+                    # actor add — would otherwise undo Zoom Item's framing.
                     actor = self.plotter.add_mesh(
                         edges, color="orange", style="wireframe",
                         line_width=4.0, label=f"_hl_{pid}",
+                        reset_camera=False,
                     )
                     self._highlight_fe_actors[pid] = actor
                     self._highlighted_pids.add(pid)
             except Exception as exc:
                 logger.debug("Highlight pid %s failed: %s", pid, exc)
         self._update_properties_panel(selected_pids)
+        # Frame the selection AFTER every add_mesh / remove_actor has run so
+        # no late-running PyVista reset_camera can undo it.
+        self._zoom_to_selection_if_enabled(selected_pids)
         if self.plotter:
             self.plotter.render()
 
@@ -2501,6 +2553,25 @@ class KModelViewerV2Dialog(QDialog):
             except Exception:
                 pass
         self._pre_dim_opacity.clear()
+
+    def _restore_pre_dim_color(self) -> None:
+        """Restore every part to its snapshot color and clear the snapshot.
+
+        Snapshot is populated by ``_apply_selection_dim`` when a Phantom Color
+        override is active. Called when the override is cleared, when Phantom
+        mode is turned off, or when the selection is dropped.
+        """
+        if not self._pre_dim_color:
+            return
+        for pid, color in self._pre_dim_color.items():
+            actor = self._part_actors.get(pid)
+            if actor is None:
+                continue
+            try:
+                actor.GetProperty().SetColor(float(color[0]), float(color[1]), float(color[2]))
+            except Exception:
+                pass
+        self._pre_dim_color.clear()
 
     def _apply_selection_dim(self, selected_pids) -> None:
         """Dim non-selected parts to highlight the navigator selection.
@@ -2519,6 +2590,7 @@ class KModelViewerV2Dialog(QDialog):
             return
         if not self._phantom_enabled:
             self._restore_pre_dim_opacity()
+            self._restore_pre_dim_color()
             self._refresh_global_wire_overlay()
             return
         sel = {int(p) for p in (selected_pids or [])}
@@ -2536,17 +2608,50 @@ class KModelViewerV2Dialog(QDialog):
                     except Exception:
                         self._pre_dim_opacity[pid] = 1.0
             dim_opa = float(self._phantom_opacity)
+            custom_color = self._phantom_custom_color
             for pid, actor in self._part_actors.items():
                 if actor is None:
                     continue
                 try:
                     base = self._pre_dim_opacity.get(pid, 1.0)
-                    target = base if pid in sel else dim_opa
-                    actor.GetProperty().SetOpacity(target)
+                    target_opa = base if pid in sel else dim_opa
+                    actor.GetProperty().SetOpacity(target_opa)
                 except Exception:
                     pass
+                # Phantom Color override: dimmed parts adopt the custom color,
+                # selected parts restore their original. Selected→dimmed and
+                # dimmed→selected transitions are handled symmetrically.
+                if custom_color is not None:
+                    if pid in sel:
+                        orig = self._pre_dim_color.pop(pid, None)
+                        if orig is not None:
+                            try:
+                                actor.GetProperty().SetColor(
+                                    float(orig[0]), float(orig[1]), float(orig[2])
+                                )
+                            except Exception:
+                                pass
+                    else:
+                        if pid not in self._pre_dim_color:
+                            try:
+                                c = actor.GetProperty().GetColor()
+                                self._pre_dim_color[pid] = (
+                                    float(c[0]), float(c[1]), float(c[2])
+                                )
+                            except Exception:
+                                self._pre_dim_color[pid] = self._part_base_color.get(
+                                    pid, (0.7, 0.7, 0.7)
+                                )
+                        try:
+                            actor.GetProperty().SetColor(*custom_color)
+                        except Exception:
+                            pass
+            if custom_color is None:
+                # Override was cleared mid-session: pop any leftover snapshots.
+                self._restore_pre_dim_color()
         else:
             self._restore_pre_dim_opacity()
+            self._restore_pre_dim_color()
         self._refresh_global_wire_overlay()
 
     def _on_phantom_toggled(self, checked: bool) -> None:
@@ -2564,6 +2669,52 @@ class KModelViewerV2Dialog(QDialog):
             self._apply_selection_dim(self._get_selected_pids())
             if self.plotter:
                 self.plotter.render()
+
+    def _on_zoom_item_toggled(self, checked: bool) -> None:
+        """Config → 'Zoom item'. When toggled on while parts are already
+        selected, frame them immediately so the user sees the effect."""
+        self._zoom_item_enabled = bool(checked)
+        if self._zoom_item_enabled:
+            self._zoom_to_selection_if_enabled(self._get_selected_pids())
+
+    def _zoom_to_selection_if_enabled(self, selected_pids) -> None:
+        """Fit camera to *selected_pids* when Zoom Item is on.
+
+        Combines the bounds of each selected part's polydata and lets VTK's
+        ``ResetCamera(bounds)`` recompute the camera position/clipping range
+        along the *current* view direction — orientation (azimuth/elevation/
+        roll) is preserved. Empty selection is a no-op so the user keeps
+        whatever view they had before deselecting.
+        """
+        if not self._zoom_item_enabled:
+            return
+        if not selected_pids or self.plotter is None:
+            return
+        xmin = ymin = zmin = float("inf")
+        xmax = ymax = zmax = float("-inf")
+        any_bounds = False
+        for pid in selected_pids:
+            sub = self._part_polydata.get(int(pid))
+            if sub is None:
+                continue
+            try:
+                b = sub.bounds  # (xmin, xmax, ymin, ymax, zmin, zmax)
+            except Exception:
+                continue
+            any_bounds = True
+            if b[0] < xmin: xmin = b[0]
+            if b[1] > xmax: xmax = b[1]
+            if b[2] < ymin: ymin = b[2]
+            if b[3] > ymax: ymax = b[3]
+            if b[4] < zmin: zmin = b[4]
+            if b[5] > zmax: zmax = b[5]
+        if not any_bounds:
+            return
+        try:
+            self.plotter.reset_camera(bounds=(xmin, xmax, ymin, ymax, zmin, zmax))
+            self.plotter.render()
+        except Exception as exc:
+            logger.debug("zoom-to-selection failed: %s", exc)
 
     def _on_icon_text_toggled(self, checked: bool) -> None:
         self._icon_text_enabled = bool(checked)
@@ -2640,6 +2791,52 @@ class KModelViewerV2Dialog(QDialog):
         self._custom_bg_color = hex_color
         self._set_background(hex_color)
 
+    def _on_pick_phantom_color(self) -> None:
+        """Choose a custom color for parts dimmed by Phantom mode."""
+        from PySide6.QtWidgets import QColorDialog
+        from PySide6.QtGui import QColor
+        cur = self._phantom_custom_color or (
+            self._cfg_phantom_color_swatch.property("rgb") or (0.5, 0.5, 0.5)
+        )
+        initial = QColor.fromRgbF(*cur)
+        chosen = QColorDialog.getColor(initial, self, "Phantom Color")
+        if not chosen.isValid():
+            return
+        new_rgb = (chosen.redF(), chosen.greenF(), chosen.blueF())
+        self._set_swatch_color(self._cfg_phantom_color_swatch, new_rgb)
+        self._phantom_custom_color = new_rgb
+        # Re-apply dim so the new color shows immediately when phantom is on.
+        if self._phantom_enabled:
+            self._apply_selection_dim(self._get_selected_pids())
+            if self.plotter:
+                self.plotter.render()
+
+    def _on_reset_model_display(self) -> None:
+        """Restore Model Display defaults: BG=white, Phantom Color off, Edge=Auto.
+
+        Phantom mode itself stays on/off as the user left it — only the
+        *custom color* override is cleared so each dimmed part keeps its
+        own color again.
+        """
+        # Background → white
+        self._custom_bg_color = None
+        self._set_swatch_color(self._cfg_bg_swatch, (1.0, 1.0, 1.0))
+        self._set_background("white")
+        # Phantom custom color → off (parts will revert to their own colors
+        # next time _apply_selection_dim runs).
+        self._phantom_custom_color = None
+        self._set_swatch_color(self._cfg_phantom_color_swatch, (0.5, 0.5, 0.5))
+        if self._phantom_enabled:
+            self._apply_selection_dim(self._get_selected_pids())
+        else:
+            # Phantom is off but stale color snapshots may exist if the user
+            # picked a custom color earlier while phantom was on — clear them.
+            self._restore_pre_dim_color()
+        # Edge color → auto (delegates to existing handler).
+        self._on_reset_edge_color()
+        if self.plotter:
+            self.plotter.render()
+
     def _on_pick_edge_color(self) -> None:
         from PySide6.QtWidgets import QColorDialog
         from PySide6.QtGui import QColor
@@ -2694,7 +2891,18 @@ class KModelViewerV2Dialog(QDialog):
             heading_row = f"Heading: {raw_name}<br>" if raw_name else ""
             sub  = self._part_polydata.get(pid)
             mat_block = self._material_html_for_pid(pid)
-            if sub is not None:
+            topo = self._part_topology.get(pid)
+            if topo:
+                n_nodes = topo.get("nodes", sub.n_points if sub is not None else 0)
+                n_elems = topo.get("elements", sub.n_cells if sub is not None else 0)
+                lines.append(
+                    f"<b>Part {pid}</b><br>"
+                    f"{heading_row}"
+                    f"Nodes: {n_nodes:,}<br>"
+                    f"Elements: {n_elems:,}"
+                    f"{mat_block}<hr>"
+                )
+            elif sub is not None:
                 lines.append(
                     f"<b>Part {pid}</b><br>"
                     f"{heading_row}"
@@ -3648,16 +3856,40 @@ class KModelViewerV2Dialog(QDialog):
         except Exception as exc:
             self._status.showMessage(f"Cache clear failed: {exc}", 4000)
 
+    # def _action_about(self):
+    #     QMessageBox.about(
+    #         self, "About 3D Viewer 2.0",
+    #         "<h3>3D Viewer 2.0</h3>"
+    #         "<p>Next-generation LS-DYNA model viewer for KeywordManager.</p>"
+    #         "<p>Style: industrial/sober — steel-blue accent on dark panels.</p>"
+    #         "<p>Reuses PyDyna parse, VTK cache, and render engine from<br>"
+    #         "the classic 3D Model Viewer.</p>",
+    #     )
+        
     def _action_about(self):
-        QMessageBox.about(
-            self, "About 3D Viewer 2.0",
+        """Show an About dialog with version information."""
+        icons_dir = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "resources", "icons",
+        )
+        msg = QMessageBox(self)
+        msg.setWindowTitle("About 3D Viewer 2.0")
+        ico_path = os.path.join(icons_dir, "viewer_3D_.ico")
+        if os.path.exists(ico_path):
+            px = QPixmap(ico_path).scaled(
+                64, 64, Qt.AspectRatioMode.KeepAspectRatio,
+                Qt.TransformationMode.SmoothTransformation,
+            )
+            msg.setIconPixmap(px)
+        msg.setTextFormat(Qt.TextFormat.RichText)
+        msg.setText(
             "<h3>3D Viewer 2.0</h3>"
             "<p>Next-generation LS-DYNA model viewer for KeywordManager.</p>"
-            "<p>Design: hybrid Open Step Viewer 27.3 + Autodesk Viewer.<br>"
-            "Style: industrial/sober — steel-blue accent on dark panels.</p>"
+            "<p>Style: industrial/sober — steel-blue accent on dark panels.</p>"
             "<p>Reuses PyDyna parse, VTK cache, and render engine from<br>"
             "the classic 3D Model Viewer.</p>",
         )
+        msg.exec()
 
     # =========================================================================
     #  Status / lifecycle

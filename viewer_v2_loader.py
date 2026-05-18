@@ -108,17 +108,11 @@ def _kw_should_keep(line: str):
 
 
 def _write_geometry_filtered_temp(file_path: Path):
-    """Write a geometry-only filtered copy of *file_path* to a temp file.
+    """Write a geometry-only filtered copy of *file_path* to %TEMP%.
 
-    The temp file is written **next to the original** (same directory, ``.tmp``
-    extension) so that relative ``*INCLUDE`` / ``*INCLUDE_TRANSFORM`` paths
-    resolve naturally without any rewriting.  Using ``.tmp`` (not ``.k``) avoids
-    triggering QFileSystemWatcher patterns that watch for ``.k`` files.
-
-    Absolute INCLUDE paths are kept as-is.  Relative paths are left unchanged
-    because the temp file lives in the same directory as the source.
-
-    Caller is responsible for deleting the temp file afterwards.
+    Relative ``*INCLUDE`` paths inside the file are rewritten to absolute paths
+    so PyDyna resolves them when parsing the temp file. Caller deletes the temp
+    file afterwards.
     """
     import tempfile
 
@@ -140,11 +134,13 @@ def _write_geometry_filtered_temp(file_path: Path):
                 if keep_block:
                     out_lines.append(line)
                 continue
-            # First non-comment data line is the include filename — keep as-is.
-            # Relative paths resolve correctly because the temp file is in the
-            # same directory as the original.  No rewriting needed.
             awaiting_include_fname = False
             if keep_block:
+                fname = stripped
+                if not (fname.startswith("/") or (len(fname) > 1 and fname[1] == ":")):
+                    abs_fname = str(base_dir / fname)
+                    ending = line[len(line.rstrip("\r\n")):]
+                    line = abs_fname + ending
                 out_lines.append(line)
             continue
 
@@ -160,21 +156,12 @@ def _write_geometry_filtered_temp(file_path: Path):
             out_lines.append(line)
 
     try:
-        # Write next to the original so relative INCLUDE paths still resolve.
-        # Use .tmp (not .k) to avoid triggering file-watcher patterns.
-        fd, tmp = tempfile.mkstemp(suffix=".tmp", prefix="._mv_", dir=str(base_dir))
+        fd, tmp = tempfile.mkstemp(suffix=".k", prefix="mv_tmp_")
         with os.fdopen(fd, "w", encoding="utf-8") as fh:
             fh.writelines(out_lines)
         return Path(tmp)
     except Exception:
-        # Fall back to %TEMP% if the source directory is not writable.
-        try:
-            fd, tmp = tempfile.mkstemp(suffix=".tmp", prefix="mv_tmp_")
-            with os.fdopen(fd, "w", encoding="utf-8") as fh:
-                fh.writelines(out_lines)
-            return Path(tmp)
-        except Exception:
-            return None
+        return None
 
 
 # ---------------------------------------------------------------------------
@@ -259,7 +246,7 @@ def _scan_kfile_profile(file_path: Path) -> _DeckProfile:
 #  VTK binary cache
 # ---------------------------------------------------------------------------
 
-_VIEWER_CACHE_SCHEMA = "v4"  # bump when the entities/materials payload shape changes
+_VIEWER_CACHE_SCHEMA = "v7"  # bump when the entities/materials payload shape changes
 
 
 def viewer_cache_key(file_path: Path) -> str:
@@ -316,6 +303,17 @@ def _entities_to_json_safe(entities: dict) -> dict:
                 "part_to_mid": {
                     str(pid): int(mid) for pid, mid in val.get("part_to_mid", {}).items()
                 },
+                "part_to_heading": {
+                    str(pid): str(h) for pid, h in val.get("part_to_heading", {}).items()
+                },
+            }
+        elif cat == "__topology__":
+            out["__topology__"] = {
+                "total_nodes": int(val.get("total_nodes", 0)),
+                "per_pid": {
+                    str(pid): {"elements": d["elements"], "nodes": d["nodes"]}
+                    for pid, d in val.get("per_pid", {}).items()
+                },
             }
         else:
             out[cat] = {
@@ -347,6 +345,18 @@ def _entities_from_json_safe(data: dict) -> dict:
                 "part_to_mid": {
                     int(pid): int(mid)
                     for pid, mid in val.get("part_to_mid", {}).items()
+                },
+                "part_to_heading": {
+                    int(pid): str(h)
+                    for pid, h in val.get("part_to_heading", {}).items()
+                },
+            }
+        elif cat == "__topology__":
+            out["__topology__"] = {
+                "total_nodes": int(val.get("total_nodes", 0)),
+                "per_pid": {
+                    int(pid): {"elements": d["elements"], "nodes": d["nodes"]}
+                    for pid, d in val.get("per_pid", {}).items()
                 },
             }
         else:
@@ -617,6 +627,74 @@ def _extract_part_names(deck) -> dict:
 #  Top-level loader
 # ---------------------------------------------------------------------------
 
+def _count_deck_topology(flat_deck) -> dict:
+    """Count per-PID element totals and unique referenced node counts from a
+    parsed (expanded) PyDyna Deck.
+
+    Uses the same ``kw.elements`` DataFrame that the Keyword Manager UI reads,
+    so the numbers match exactly what is shown in the *ELEMENT_* parameter table.
+
+    Returns::
+
+        {
+            "total_nodes": int,               # all rows in all *NODE sections
+            "per_pid": {
+                pid: {"elements": int, "nodes": int},
+                ...
+            },
+        }
+
+    ``nodes`` per PID is the count of **unique node IDs** referenced by that
+    part's element connectivity (n1..nN columns), which is the real LS-DYNA
+    notion of "how many nodes belong to this part".
+    """
+    per_pid_elem: dict = {}   # pid -> element count
+    per_pid_nids: dict = {}   # pid -> set of referenced nids
+    total_nodes = 0
+
+    # Total node count from *NODE sections
+    try:
+        for kw in flat_deck.nodes:
+            nodes_card = getattr(kw, "nodes", None)
+            df = getattr(nodes_card, "table", None) if nodes_card is not None else None
+            if df is not None and "nid" in getattr(df, "columns", []):
+                total_nodes += len(df)
+    except Exception:
+        pass
+
+    # Element count and referenced node IDs per PID
+    try:
+        for kw in flat_deck.keywords:
+            df = getattr(kw, "elements", None)
+            if df is None or not hasattr(df, "columns"):
+                continue
+            cols = list(getattr(df, "columns", []))
+            if "pid" not in cols:
+                continue
+            node_cols = [c for c in cols if len(c) > 1 and c[0] == "n" and c[1:].isdigit()]
+            for pid_val, grp in df.groupby("pid"):
+                pid = int(pid_val)
+                per_pid_elem[pid] = per_pid_elem.get(pid, 0) + len(grp)
+                if node_cols:
+                    nset = per_pid_nids.setdefault(pid, set())
+                    for col in node_cols:
+                        vals = grp[col].dropna()
+                        nset.update(int(v) for v in vals if v != 0)
+    except Exception:
+        logger.debug("_count_deck_topology failed", exc_info=True)
+
+    return {
+        "total_nodes": total_nodes,
+        "per_pid": {
+            pid: {
+                "elements": per_pid_elem[pid],
+                "nodes": len(per_pid_nids.get(pid, set())),
+            }
+            for pid in per_pid_elem
+        },
+    }
+
+
 def _build_node_ids_array(flat_deck, polydata) -> None:
     """Attach a ``node_ids`` point_data array to *polydata* (NID per VTK point).
 
@@ -697,12 +775,24 @@ def load_polydata(file_path: Path, on_geometry_ready=None):
     # artefacts that the legacy viewer never showed. The legacy viewer relies
     # exclusively on PyDyna's ``get_polydata``, which excludes those spring
     # shells. To stay 1:1 with legacy we always go through PyDyna here.
-    tmp_path = _write_geometry_filtered_temp(file_path)
-    parse_path = tmp_path if tmp_path is not None else file_path
-    timings.mark("filter_temp")
 
-    profile = _scan_kfile_profile(parse_path)
+    # Pre-scan the original file FIRST so we can decide whether the geometry
+    # filter is safe. For decks with *INCLUDE the master is small (no real
+    # benefit from filtering) and rewriting relative include filenames to
+    # absolute paths overflows PyDyna's 80-char *INCLUDE filename field —
+    # PyDyna then truncates the path and fails to resolve the include,
+    # leaving deck.nodes empty and crashing get_polydata with
+    # KeyError(['x','y','z']).
+    profile = _scan_kfile_profile(file_path)
     timings.mark("pre_scan")
+
+    if profile.has_include:
+        tmp_path = None
+        parse_path = file_path
+    else:
+        tmp_path = _write_geometry_filtered_temp(file_path)
+        parse_path = tmp_path if tmp_path is not None else file_path
+    timings.mark("filter_temp")
     # print(
     #     f"[viewer-load] {file_path.name} | profile: "
     #     f"include={profile.has_include} xform_inc={profile.has_include_xform} "
@@ -741,17 +831,6 @@ def load_polydata(file_path: Path, on_geometry_ready=None):
             polydata = get_polydata(deck, cwd=cwd)
     except Exception as exc:
         logger.exception("get_polydata failed for %s", file_path)
-        exc_str = str(exc)
-        no_geometry = (
-            "missing node or element keyword" in exc_str.lower()
-            or ("x" in exc_str and "y" in exc_str and "z" in exc_str and "columns" in exc_str)
-        )
-        if no_geometry:
-            return None, {}, {}, (
-                "This file does not contain geometry data (NODE / ELEMENT keywords).\n\n"
-                "The 3D viewer only displays files with mesh data.\n"
-                "Material-only or parameter-only decks cannot be visualised."
-            )
         return None, {}, {}, f"Could not extract geometry from the model:\n\n{exc}"
     timings.mark("get_polydata")
 
@@ -790,9 +869,39 @@ def load_polydata(file_path: Path, on_geometry_ready=None):
         mat_payload = walk_materials(file_path)
         if mat_payload.get("materials") or mat_payload.get("part_to_mid"):
             keyword_entities["__materials__"] = mat_payload
+        # Authoritative headings from the .k walker — PyDyna's ``str(p)`` can
+        # drop the heading line for parts pulled in through INCLUDE_TRANSFORM
+        # after offset expansion. Prefer the walker value whenever the
+        # PyDyna-derived name is missing or synthetic (e.g. "Part 12").
+        walker_headings = mat_payload.get("part_to_heading", {}) or {}
+        for pid, heading in walker_headings.items():
+            if not heading:
+                continue
+            existing = part_names.get(pid, "")
+            synthetic = existing in ("", f"Part {pid}")
+            if synthetic:
+                part_names[pid] = heading
+
+        # Transform titles take precedence over individual part headings for
+        # parts pulled in via *INCLUDE_TRANSFORM. The user's mental model of
+        # an assembly is "this part belongs to the <transform-title> group",
+        # so showing the transform's title in the navigator is more useful
+        # than the raw *PART heading (which may be a cryptic sub-assembly
+        # identifier). Master-file parts and plain *INCLUDE parts have no
+        # tranid and are unaffected.
+        walker_xform_titles = mat_payload.get("part_to_transform_title", {}) or {}
+        for pid, title in walker_xform_titles.items():
+            if title:
+                part_names[pid] = title
     except Exception:
         logger.debug("walk_materials failed", exc_info=True)
     timings.mark("materials")
+
+    try:
+        keyword_entities["__topology__"] = _count_deck_topology(flat_deck)
+    except Exception:
+        logger.debug("_count_deck_topology failed", exc_info=True)
+    timings.mark("topology")
 
     _viewer_cache_save(cache_key, polydata, part_names, keyword_entities)
     timings.mark("cache_save")

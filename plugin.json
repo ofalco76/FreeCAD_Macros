@@ -1,0 +1,12 @@
+{
+    "name": "unit_converter",
+    "display_name": "UnitConv",
+    "version": "1.0.0",
+    "author": "KeywordManager Team",
+    "description": "Unit Converter: Convert between different unit systems (SI, CGS, Imperial) for LS-DYNA simulations",
+    "category": "Conversion",
+    "entry_point": "tool.py",
+    "class_name": "UnitConverterTool",
+    "icon": null,
+    "shortcut": "Ctrl+Shift+U"
+}
