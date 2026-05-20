@@ -1,0 +1,1217 @@
+# -*- coding: mbcs -*-
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.openStep('C:/Users/u5012935/Downloads/as1_pe_203.stp', scaleFromFile=OFF)
+mdb.models['Model-1'].PartFromGeometryFile(combine=False, dimensionality=
+    THREE_D, geometryFile=mdb.acis, name='as1_pe_203-1', type=DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=2, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-2', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=3, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-3', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=4, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-4', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=5, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-5', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=6, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-6', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=7, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-7', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=8, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-8', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=9, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-9', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=10, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-10', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=11, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-11', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=12, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-12', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=13, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-13', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=14, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-14', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=15, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-15', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=16, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-16', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=17, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-17', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=18, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-18', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=19, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-19', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=20, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-20', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=21, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-21', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=22, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-22', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=23, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-23', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=24, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-24', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=25, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-25', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=26, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-26', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=27, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-27', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=28, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-28', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=29, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-29', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=30, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-30', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=31, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-31', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=32, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-32', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=33, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-33', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=34, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-34', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=35, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-35', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=36, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-36', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=37, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-37', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=38, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-38', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=39, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-39', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=40, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-40', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=41, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-41', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=42, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-42', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=43, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-43', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=44, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-44', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=45, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-45', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=46, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-46', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=47, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-47', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=48, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-48', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=49, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-49', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].PartFromGeometryFile(bodyNum=50, combine=False, 
+    dimensionality=THREE_D, geometryFile=mdb.acis, name='as1_pe_203-50', type=
+    DEFORMABLE_BODY)
+mdb.models['Model-1'].rootAssembly.DatumCsysByDefault(CARTESIAN)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-1-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-1'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-2-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-2'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-3-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-3'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-4-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-4'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-5-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-5'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-7-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-7'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-8-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-8'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-9-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-9'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-10-1', part=mdb.models['Model-1'].parts['as1_pe_203-10'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-11-1', part=mdb.models['Model-1'].parts['as1_pe_203-11'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-12-1', part=mdb.models['Model-1'].parts['as1_pe_203-12'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-13-1', part=mdb.models['Model-1'].parts['as1_pe_203-13'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-14-1', part=mdb.models['Model-1'].parts['as1_pe_203-14'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-15-1', part=mdb.models['Model-1'].parts['as1_pe_203-15'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-16-1', part=mdb.models['Model-1'].parts['as1_pe_203-16'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-17-1', part=mdb.models['Model-1'].parts['as1_pe_203-17'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-18-1', part=mdb.models['Model-1'].parts['as1_pe_203-18'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-19-1', part=mdb.models['Model-1'].parts['as1_pe_203-19'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-20-1', part=mdb.models['Model-1'].parts['as1_pe_203-20'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-21-1', part=mdb.models['Model-1'].parts['as1_pe_203-21'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-22-1', part=mdb.models['Model-1'].parts['as1_pe_203-22'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-23-1', part=mdb.models['Model-1'].parts['as1_pe_203-23'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-24-1', part=mdb.models['Model-1'].parts['as1_pe_203-24'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-25-1', part=mdb.models['Model-1'].parts['as1_pe_203-25'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-26-1', part=mdb.models['Model-1'].parts['as1_pe_203-26'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-27-1', part=mdb.models['Model-1'].parts['as1_pe_203-27'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-28-1', part=mdb.models['Model-1'].parts['as1_pe_203-28'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-29-1', part=mdb.models['Model-1'].parts['as1_pe_203-29'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-30-1', part=mdb.models['Model-1'].parts['as1_pe_203-30'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-31-1', part=mdb.models['Model-1'].parts['as1_pe_203-31'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-32-1', part=mdb.models['Model-1'].parts['as1_pe_203-32'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-33-1', part=mdb.models['Model-1'].parts['as1_pe_203-33'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-34-1', part=mdb.models['Model-1'].parts['as1_pe_203-34'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-35-1', part=mdb.models['Model-1'].parts['as1_pe_203-35'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-36-1', part=mdb.models['Model-1'].parts['as1_pe_203-36'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-37-1', part=mdb.models['Model-1'].parts['as1_pe_203-37'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-38-1', part=mdb.models['Model-1'].parts['as1_pe_203-38'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-39-1', part=mdb.models['Model-1'].parts['as1_pe_203-39'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-40-1', part=mdb.models['Model-1'].parts['as1_pe_203-40'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-41-1', part=mdb.models['Model-1'].parts['as1_pe_203-41'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-42-1', part=mdb.models['Model-1'].parts['as1_pe_203-42'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-43-1', part=mdb.models['Model-1'].parts['as1_pe_203-43'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-44-1', part=mdb.models['Model-1'].parts['as1_pe_203-44'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-45-1', part=mdb.models['Model-1'].parts['as1_pe_203-45'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-46-1', part=mdb.models['Model-1'].parts['as1_pe_203-46'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-47-1', part=mdb.models['Model-1'].parts['as1_pe_203-47'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-48-1', part=mdb.models['Model-1'].parts['as1_pe_203-48'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-49-1', part=mdb.models['Model-1'].parts['as1_pe_203-49'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-50-1', part=mdb.models['Model-1'].parts['as1_pe_203-50'])
+mdb.models['Model-1'].parts['as1_pe_203-1'].DatumPlaneByPrincipalPlane(offset=
+    0.0, principalPlane=XYPLANE)
+mdb.models['Model-1'].parts['as1_pe_203-1'].DatumPlaneByPrincipalPlane(offset=
+    0.0, principalPlane=YZPLANE)
+mdb.models['Model-1'].parts['as1_pe_203-1'].DatumPlaneByPrincipalPlane(offset=
+    0.0, principalPlane=XZPLANE)
+mdb.models['Model-1'].parts['as1_pe_203-3'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-3'].edges[8], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-3'].edges[12], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-3'].edges[9], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-3'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-3'].edges[20], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-3'].edges[16], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-3'].edges[11], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-3'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-3'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-3'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-5'].PartitionCellByExtrudeEdge(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), edges=(mdb.models['Model-1'].parts['as1_pe_203-5'].edges[3], 
+    mdb.models['Model-1'].parts['as1_pe_203-5'].edges[5]), line=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].edges[4], sense=FORWARD)
+mdb.models['Model-1'].parts['as1_pe_203-5'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].cells.getSequenceFromMask((
+    '[#7 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-5'].edges[3], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].vertices[3], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].vertices[0])
+mdb.models['Model-1'].parts['as1_pe_203-5'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].cells.getSequenceFromMask((
+    '[#3f ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-5'].edges[2], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-5'].edges[19], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-5'].edges[22], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-5'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-5'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-7'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-7'].edges[14], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-7'].edges[9], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-7'].edges[15], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-7'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-7'].edges[8], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-7'].edges[24], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].vertices[13])
+mdb.models['Model-1'].parts['as1_pe_203-7'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-7'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-2'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.LinearInstancePattern(direction1=(-1.0, 0.0, 
+    0.0), direction2=(0.0, 0.0, -1.0), instanceList=('as1_pe_203-5-1', ), 
+    number1=2, number2=2, spacing1=85.0, spacing2=25.980762)
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-3'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.translate(instanceList=('as1_pe_203-5-1', ), 
+    vector=(-107.5, 0.0, -12.990381))
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-4'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-5'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-6'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-7'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.deleteFeatures(('as1_pe_203-1-1', 
+    'as1_pe_203-2-1', 'as1_pe_203-3-1', 'as1_pe_203-4-1', 'as1_pe_203-5-1', 
+    'as1_pe_203-6-1', 'as1_pe_203-7-1', 'as1_pe_203-8-1', 'as1_pe_203-9-1', 
+    'as1_pe_203-10-1', 'as1_pe_203-11-1', 'as1_pe_203-12-1', 'as1_pe_203-13-1', 
+    'as1_pe_203-14-1', 'as1_pe_203-15-1', 'as1_pe_203-16-1', 'as1_pe_203-17-1', 
+    'as1_pe_203-18-1', 'as1_pe_203-19-1', 'as1_pe_203-20-1', 'as1_pe_203-21-1', 
+    'as1_pe_203-22-1', 'as1_pe_203-23-1', 'as1_pe_203-24-1', 'as1_pe_203-25-1', 
+    'as1_pe_203-26-1', 'as1_pe_203-27-1', 'as1_pe_203-28-1', 'as1_pe_203-29-1', 
+    'as1_pe_203-30-1', 'as1_pe_203-31-1', 'as1_pe_203-32-1', 'as1_pe_203-33-1', 
+    'as1_pe_203-34-1', 'as1_pe_203-35-1', 'as1_pe_203-36-1', 'as1_pe_203-37-1', 
+    'as1_pe_203-38-1', 'as1_pe_203-39-1', 'as1_pe_203-40-1', 'as1_pe_203-41-1', 
+    'as1_pe_203-42-1', 'as1_pe_203-43-1', 'as1_pe_203-44-1', 'as1_pe_203-45-1', 
+    'as1_pe_203-46-1', 'as1_pe_203-47-1', 'as1_pe_203-48-1', 'as1_pe_203-49-1', 
+    'as1_pe_203-50-1', 'as1_pe_203-6-2', 'as1_pe_203-5-1-lin-1-2', 
+    'as1_pe_203-5-1-lin-2-1', 'as1_pe_203-5-1-lin-2-2', 'as1_pe_203-6-3', 
+    'as1_pe_203-6-4', 'as1_pe_203-6-5', 'as1_pe_203-6-6', 'as1_pe_203-6-7'))
+mdb.models['Model-1'].parts['as1_pe_203-9'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-9'].PartitionCellByExtrudeEdge(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), edges=(mdb.models['Model-1'].parts['as1_pe_203-9'].edges[3], 
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[5]), line=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[10], sense=FORWARD)
+mdb.models['Model-1'].parts['as1_pe_203-9'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].cells.getSequenceFromMask((
+    '[#5 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[3], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[3], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].vertices[5])
+del mdb.models['Model-1'].parts['as1_pe_203-9'].features['Partition cell-2']
+mdb.models['Model-1'].parts['as1_pe_203-9'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].cells.getSequenceFromMask((
+    '[#7 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[3], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[4], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-9'].edges[8], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-9'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].cells.getSequenceFromMask((
+    '[#3f ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].vertices[16], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].vertices[17], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].vertices[14])
+mdb.models['Model-1'].parts['as1_pe_203-9'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-11'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-11'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-11'].edges[10], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-11'].edges[15], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-11'].edges[9], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-11'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-11'].edges[24], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-11'].edges[31], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-11'].edges[17], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-11'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[17], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[20], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[1], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[19], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[18], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[14])
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[22], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[22], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[18], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#c ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[49], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[60], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[15], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#25 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[80], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[44], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[33])
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#24c ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[106], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[106], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[111], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[29], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[31], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[25])
+mdb.models['Model-1'].parts['as1_pe_203-13'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-13'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges.getSequenceFromMask((
+    '[#ffffffff:5 #1 ]', ), ), minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#4ba9 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[52], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[74], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[39])
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#2d170 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[56], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[92], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].vertices[42])
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#26800 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[124], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[145], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges[129], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].setMeshControls(regions=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#ffffff ]', ), ), technique=SWEEP)
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].setMeshControls(algorithm=
+    MEDIAL_AXIS, regions=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#ffffff ]', ), ))
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-19'].PartitionCellByExtrudeEdge(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), edges=(
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[3], 
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[5]), line=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[2], sense=FORWARD)
+mdb.models['Model-1'].parts['as1_pe_203-19'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].cells.getSequenceFromMask((
+    '[#7 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[3], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].vertices[4], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].vertices[6])
+mdb.models['Model-1'].parts['as1_pe_203-19'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].cells.getSequenceFromMask((
+    '[#3f ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[2], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[18], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-19'].edges[16], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-19'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-19'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-21'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-21'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-21'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-21'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-21'].edges[4], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-21'].edges[6], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].vertices[7])
+mdb.models['Model-1'].parts['as1_pe_203-21'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-21'].edges[11], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-21'].edges[14], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-21'].edges[14], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-21'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-23'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-23'].PartitionCellByExtrudeEdge(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), edges=(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[3], 
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[5]), line=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[2], sense=FORWARD)
+mdb.models['Model-1'].parts['as1_pe_203-23'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[3], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].vertices[4], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[4], MIDDLE))
+#* Feature creation failed.
+mdb.models['Model-1'].parts['as1_pe_203-23'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[3], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[3], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[7], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-23'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].cells.getSequenceFromMask((
+    '[#f ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-23'].edges[2], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].vertices[6], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].vertices[7])
+mdb.models['Model-1'].parts['as1_pe_203-23'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-25'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-25'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-25'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-25'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-25'].edges[14], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-25'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-25'].edges[9], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-25'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-25'].edges[17], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-25'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-27'].PartitionCellByExtrudeEdge(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-27'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), edges=(
+    mdb.models['Model-1'].parts['as1_pe_203-27'].edges[3], 
+    mdb.models['Model-1'].parts['as1_pe_203-27'].edges[5]), line=
+    mdb.models['Model-1'].parts['as1_pe_203-27'].edges[2], sense=FORWARD)
+mdb.models['Model-1'].parts['as1_pe_203-27'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-27'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-29'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-29'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[2], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[2], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[21], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[30], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[30], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[36], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[19], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[53], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[24], CENTER))
+del mdb.models['Model-1'].parts['as1_pe_203-31'].features['Partition cell-3']
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[24], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[22], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[33])
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#29 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[71], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[58], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[72], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#1c0 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[109], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[91], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[92], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#14a ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[138], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[137], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[100], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#78 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[25], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[80], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[30])
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#11c0 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[38], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[60], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[77], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-31'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#63ffff ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[17], point2=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges[23], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].vertices[65])
+mdb.models['Model-1'].parts['as1_pe_203-31'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-31'].seedEdgeBySize(constraint=FINER, 
+    deviationFactor=0.1, edges=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges.getSequenceFromMask((
+    '[#ffffffff:6 #3ffffff ]', ), ), minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-31'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-37'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-37'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-37'].edges[0], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-37'].edges[0], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-37'].edges[5], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-37'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-37'].edges[6], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].vertices[5], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].vertices[6])
+mdb.models['Model-1'].parts['as1_pe_203-37'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-39'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-39'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-41'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-41'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-43'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=1.0)
+mdb.models['Model-1'].parts['as1_pe_203-43'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[27], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[23], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[11], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[53], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[28], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[30], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#7 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[88], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[68], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[39], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#1c ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[81], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[36], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[31], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#110 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[58], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[83], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[63], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#b0 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[104], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[118], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[42], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#ca0 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[65], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[65], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[123], CENTER))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#28440 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[91], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[110], CENTER), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].vertices[64])
+mdb.models['Model-1'].parts['as1_pe_203-43'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-43'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#ca000 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[170], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[153], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[166], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-43'].setMeshControls(algorithm=
+    MEDIAL_AXIS, regions=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#ffffff ]', ), ), technique=SWEEP)
+mdb.models['Model-1'].parts['as1_pe_203-43'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-43'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#218109 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[59], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[57], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[201], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-43'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#3185000 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[237], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[194], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-43'].edges[167], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-43'].generateMesh()
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-4-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-4'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-5-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-5'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-6-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-6'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-7-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-7'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-8-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-8'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-9-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-9'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-10-1', part=mdb.models['Model-1'].parts['as1_pe_203-10'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-11-1', part=mdb.models['Model-1'].parts['as1_pe_203-11'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-12-1', part=mdb.models['Model-1'].parts['as1_pe_203-12'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-13-1', part=mdb.models['Model-1'].parts['as1_pe_203-13'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-14-1', part=mdb.models['Model-1'].parts['as1_pe_203-14'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-15-1', part=mdb.models['Model-1'].parts['as1_pe_203-15'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-16-1', part=mdb.models['Model-1'].parts['as1_pe_203-16'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-17-1', part=mdb.models['Model-1'].parts['as1_pe_203-17'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-18-1', part=mdb.models['Model-1'].parts['as1_pe_203-18'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-19-1', part=mdb.models['Model-1'].parts['as1_pe_203-19'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-20-1', part=mdb.models['Model-1'].parts['as1_pe_203-20'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-21-1', part=mdb.models['Model-1'].parts['as1_pe_203-21'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-22-1', part=mdb.models['Model-1'].parts['as1_pe_203-22'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-23-1', part=mdb.models['Model-1'].parts['as1_pe_203-23'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-24-1', part=mdb.models['Model-1'].parts['as1_pe_203-24'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-25-1', part=mdb.models['Model-1'].parts['as1_pe_203-25'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-26-1', part=mdb.models['Model-1'].parts['as1_pe_203-26'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-27-1', part=mdb.models['Model-1'].parts['as1_pe_203-27'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-28-1', part=mdb.models['Model-1'].parts['as1_pe_203-28'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-29-1', part=mdb.models['Model-1'].parts['as1_pe_203-29'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-30-1', part=mdb.models['Model-1'].parts['as1_pe_203-30'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-31-1', part=mdb.models['Model-1'].parts['as1_pe_203-31'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-32-1', part=mdb.models['Model-1'].parts['as1_pe_203-32'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-33-1', part=mdb.models['Model-1'].parts['as1_pe_203-33'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-34-1', part=mdb.models['Model-1'].parts['as1_pe_203-34'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-35-1', part=mdb.models['Model-1'].parts['as1_pe_203-35'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-36-1', part=mdb.models['Model-1'].parts['as1_pe_203-36'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-37-1', part=mdb.models['Model-1'].parts['as1_pe_203-37'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-38-1', part=mdb.models['Model-1'].parts['as1_pe_203-38'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-39-1', part=mdb.models['Model-1'].parts['as1_pe_203-39'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-40-1', part=mdb.models['Model-1'].parts['as1_pe_203-40'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-41-1', part=mdb.models['Model-1'].parts['as1_pe_203-41'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-42-1', part=mdb.models['Model-1'].parts['as1_pe_203-42'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-43-1', part=mdb.models['Model-1'].parts['as1_pe_203-43'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-44-1', part=mdb.models['Model-1'].parts['as1_pe_203-44'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-45-1', part=mdb.models['Model-1'].parts['as1_pe_203-45'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-46-1', part=mdb.models['Model-1'].parts['as1_pe_203-46'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-47-1', part=mdb.models['Model-1'].parts['as1_pe_203-47'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-48-1', part=mdb.models['Model-1'].parts['as1_pe_203-48'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-49-1', part=mdb.models['Model-1'].parts['as1_pe_203-49'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name=
+    'as1_pe_203-50-1', part=mdb.models['Model-1'].parts['as1_pe_203-50'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-1-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-1'])
+mdb.models['Model-1'].rootAssembly.Instance(dependent=ON, name='as1_pe_203-3-1'
+    , part=mdb.models['Model-1'].parts['as1_pe_203-3'])
+mdb.models['Model-1'].parts['as1_pe_203-1'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[0], CENTER), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[1], MIDDLE), point3=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[3], MIDDLE))
+mdb.models['Model-1'].parts['as1_pe_203-1'].PartitionCellByPlaneThreePoints(
+    cells=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), point1=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].InterestingPoint(
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[0], MIDDLE), point2=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].vertices[13], point3=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].vertices[11])
+mdb.models['Model-1'].parts['as1_pe_203-1'].PartitionCellByExtrudeEdge(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].cells.getSequenceFromMask((
+    '[#f ]', ), ), edges=(
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[11], 
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[24], 
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[32], 
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[34]), line=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].edges[6], sense=FORWARD)
+mdb.models['Model-1'].parts['as1_pe_203-1'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=0.5)
+mdb.models['Model-1'].parts['as1_pe_203-1'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].parts['as1_pe_203-31'].deleteMesh()
+mdb.models['Model-1'].parts['as1_pe_203-31'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['as1_pe_203-31'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].edges.getSequenceFromMask((
+    '[#ffffffff:6 #3ffffff ]', ), ))
+mdb.models['Model-1'].parts['as1_pe_203-31'].generateMesh()
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteMesh(regions=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#ffffff ]', ), ))
+mdb.models['Model-1'].parts['as1_pe_203-13'].deleteSeeds(regions=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].edges.getSequenceFromMask((
+    '[#ffffffff:6 #fff ]', ), ))
+mdb.models['Model-1'].parts['as1_pe_203-13'].seedPart(deviationFactor=0.1, 
+    minSizeFactor=0.1, size=2.0)
+mdb.models['Model-1'].parts['as1_pe_203-13'].generateMesh()
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.models['Model-1'].Material(name='solid')
+mdb.models['Model-1'].HomogeneousSolidSection(material='solid', name='solid', 
+    thickness=None)
+mdb.models['Model-1'].parts['as1_pe_203-13'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#ffffff ]', ), ), name='Set-5')
+mdb.models['Model-1'].parts['as1_pe_203-13'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].sets['Set-5'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-1'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].cells.getSequenceFromMask((
+    '[#fff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-1'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-1'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-3'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].cells.getSequenceFromMask((
+    '[#f ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-3'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-3'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-5'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].cells.getSequenceFromMask((
+    '[#fff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-5'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-5'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-7'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].cells.getSequenceFromMask((
+    '[#f ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-7'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-7'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-9'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].cells.getSequenceFromMask((
+    '[#fff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-9'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-9'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-11'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].cells.getSequenceFromMask((
+    '[#f ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-11'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-11'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-13'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].cells.getSequenceFromMask((
+    '[#ffffff ]', ), ), name='Set-6')
+mdb.models['Model-1'].parts['as1_pe_203-13'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-13'].sets['Set-6'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-19'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].cells.getSequenceFromMask((
+    '[#fff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-19'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-19'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-21'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].cells.getSequenceFromMask((
+    '[#f ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-21'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-21'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+# Save by u5012935 on 2026_05_11-18.55.35; build 2022 2021_09_15-19.57.30 176069
+from part import *
+from material import *
+from section import *
+from assembly import *
+from step import *
+from interaction import *
+from load import *
+from mesh import *
+from optimization import *
+from job import *
+from sketch import *
+from visualization import *
+from connectorBehavior import *
+mdb.models['Model-1'].parts['as1_pe_203-23'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].cells.getSequenceFromMask((
+    '[#ff ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-23'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-23'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-25'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-25'].cells.getSequenceFromMask((
+    '[#3 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-25'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-25'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-27'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-27'].cells.getSequenceFromMask((
+    '[#7 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-27'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-27'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-29'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-29'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-29'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-29'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-31'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].cells.getSequenceFromMask((
+    '[#fffffff ]', ), ), name='Set-3')
+mdb.models['Model-1'].parts['as1_pe_203-31'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-31'].sets['Set-3'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-37'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].cells.getSequenceFromMask((
+    '[#f ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-37'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-37'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-39'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-39'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-39'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-39'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-41'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-41'].cells.getSequenceFromMask((
+    '[#1 ]', ), ), name='Set-1')
+mdb.models['Model-1'].parts['as1_pe_203-41'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-41'].sets['Set-1'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].parts['as1_pe_203-43'].Set(cells=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].cells.getSequenceFromMask((
+    '[#ffffffff #f ]', ), ), name='Set-2')
+mdb.models['Model-1'].parts['as1_pe_203-43'].SectionAssignment(offset=0.0, 
+    offsetField='', offsetType=MIDDLE_SURFACE, region=
+    mdb.models['Model-1'].parts['as1_pe_203-43'].sets['Set-2'], sectionName=
+    'solid', thicknessAssignment=FROM_SECTION)
+mdb.models['Model-1'].rootAssembly.regenerate()
+mdb.Job(activateLoadBalancing=False, atTime=None, contactPrint=OFF, 
+    description='', echoPrint=OFF, explicitPrecision=SINGLE, 
+    getMemoryFromAnalysis=True, historyPrint=OFF, memory=90, memoryUnits=
+    PERCENTAGE, model='Model-1', modelPrint=OFF, multiprocessingMode=DEFAULT, 
+    name='asembly_step', nodalOutputPrecision=SINGLE, numCpus=1, numDomains=1, 
+    numGPUs=0, numThreadsPerMpiProcess=1, parallelizationMethodExplicit=DOMAIN, 
+    queue=None, resultsFormat=ODB, scratch='', type=ANALYSIS, userSubroutine=''
+    , waitHours=0, waitMinutes=0)
+# Save by u5012935 on 2026_05_11-19.11.36; build 2022 2021_09_15-19.57.30 176069
